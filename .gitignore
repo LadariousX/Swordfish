@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+*.manifest
+*.spec
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+
+# IDE / Editor files
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Django / Project files
+db.sqlite3
+media/
+staticfiles/
+*.log
+
+# Byte-compiled / cache
+*.pyc
+__pycache__/
+*.pkl
+
+# OS files
+Thumbs.db
+
+# Environment variables
+.env
