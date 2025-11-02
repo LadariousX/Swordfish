@@ -1,8 +1,9 @@
-from http.client import responses
+from geopy.geocoders import Nominatim
 
 from openai import OpenAI
 import base64
 from dotenv import load_dotenv
+import requests
 
 
 
@@ -51,10 +52,63 @@ def model2_csv(client, scene_description, comment):
     )
 
     return response.output_text
+import requests
+
+import requests
+from geopy.geocoders import Nominatim
+
+def reverse_geocode(location_str: str) -> str:
+    """
+    Convert a string like '27.71244, -97.32613' into a simplified address.
+    Returns 'Unknown address' if lookup fails.
+    """
+    try:
+        # Parse latitude and longitude
+        lat_str, lon_str = location_str.split(',')
+        lat = float(lat_str.strip())
+        lon = float(lon_str.strip())
+
+        # Try direct Nominatim API request
+        url = "https://nominatim.openstreetmap.org/reverse"
+        params = {"lat": lat, "lon": lon, "format": "jsonv2", "addressdetails": 1}
+        headers = {"User-Agent": "CivicLens/1.0 (contact@example.com)"}
+        r = requests.get(url, params=params, headers=headers, timeout=10)
+        r.raise_for_status()
+
+        data = r.json()
+        addr = data.get("address", {})
+        if not addr:
+            return "Unknown address"
+
+        # Extract key pieces
+        street = addr.get("road", "")
+        house_num = addr.get("house_number", "")
+        city = addr.get("city") or addr.get("town") or addr.get("village") or ""
+        address = f"{house_num} {street}, {city}".strip().strip(",")
+
+        # Fallback: use geopy if API didn’t return properly
+        if not address or address == ",":
+            geolocator = Nominatim(user_agent="swordfish-app")
+            location = geolocator.reverse((lat, lon), language="en")
+            if not location or not location.raw.get("address"):
+                return "Unknown address"
+            addr = location.raw["address"]
+            street = addr.get("road", "")
+            house_num = addr.get("house_number", "")
+            city = addr.get("city") or addr.get("town") or addr.get("village") or ""
+            address = f"{house_num} {street}, {city}".strip().strip(",")
+
+        return address or "Unknown address"
+
+    except Exception as e:
+        print("Reverse geocode error:", e)
+        return "Unknown address"
 
 def classify_input_data(ticket):
     load_dotenv()
     client = OpenAI()
+
+    ticket.address = reverse_geocode(ticket.location)
 
     image_file = ticket.image
     comment = ticket.comments
@@ -62,7 +116,7 @@ def classify_input_data(ticket):
     r_model1 = model1_image(client,image_file).output_text
 
     r_model2 = model2_csv(client, r_model1, comment)
-    print("\n\n")
+    print("\n\nAI:\n")
     print(r_model2)
     print("\n\n")
 

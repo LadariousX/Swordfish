@@ -1,52 +1,70 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ticket Dashboard</title>
-  <style>
-    table { border-collapse: collapse; width: 100%; margin-top: 20px; }
-    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-    th { background: #eee; }
-    .status-select { width: 100%; }
-  </style>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <link rel="stylesheet" href="{% static 'dashboard.css' %}">
+
+  <!-- Leaflet -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- JS -->
+  <script defer src="{% static 'dashboard.js' %}"></script>
 </head>
 <body>
-  <h2>🎫 Ticket Dashboard</h2>
-  <p>Logged in as: {{ request.user.username }}</p>
-  <a href="{% url 'logout' %}">Logout</a>
+  <header class="topbar">
+    <h1>🗂 Ticket Dashboard</h1>
+    <nav>
+      <a href="/">Report Issue</a>
+      <a href="#">Track Ticket</a>
+      <a href="/dashboard" class="active">Administration</a>
+<form action="{% url 'logout' %}" method="post" style="display:inline;">
+  {% csrf_token %}
+  <button type="submit" class="logout-btn">Logout</button>
+</form>
+    </nav>
+  </header>
 
-  <table>
-    <tr>
-      <th>ID</th>
-      <th>Location</th>
-      <th>Department</th>
-      <th>Priority</th>
-      <th>Status</th>
-      <th>Actions</th>
-    </tr>
+  <main>
+    <section class="ticket-grid">
+      {% for ticket in tickets %}
+        <a href="{% url 'ticket_detail' ticket.id %}" class="ticket-card-link">
+          <div class="ticket-card">
+            <div class="ticket-content">
+              {% if ticket.image %}
+                <img src="{{ ticket.image.url }}" alt="Ticket image" />
+              {% endif %}
+              <div id="map-{{ ticket.id }}" class="mini-map" data-location="{{ ticket.location }}"></div>
+            </div>
 
-    {% for ticket in tickets %}
-    <tr>
-      <td>{{ ticket.id }}</td>
-      <td>{{ ticket.location }}</td>
-      <td>{{ ticket.department }}</td>
-      <td>{{ ticket.priority }}</td>
-      <td>{{ ticket.status }}</td>
-      <td>
-        <form method="POST" style="display:inline;">
-          {% csrf_token %}
-          <input type="hidden" name="ticket_id" value="{{ ticket.id }}">
-          <select name="status" class="status-select">
-            <option {% if ticket.status == "New" %}selected{% endif %}>New</option>
-            <option {% if ticket.status == "In Progress" %}selected{% endif %}>In Progress</option>
-            <option {% if ticket.status == "Resolved" %}selected{% endif %}>Resolved</option>
-          </select>
-          <button type="submit">Update</button>
-        </form>
-      </td>
-    </tr>
-    {% empty %}
-    <tr><td colspan="6">No tickets found.</td></tr>
-    {% endfor %}
-  </table>
+            <h3>
+  {% if ticket.address %}
+    {{ ticket.address }}
+  {% else %}
+    {{ ticket.location }}
+  {% endif %}
+</h3>
+
+            <p>{{ ticket.comments|truncatewords:20 }}</p>
+          </div>
+        </a>
+      {% empty %}
+        <p style="text-align:center;">No tickets yet.</p>
+      {% endfor %}
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 CivicLens | Smart Citizen Platform</p>
+  </footer>
 </body>
 </html>

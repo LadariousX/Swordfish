@@ -48,3 +48,8 @@ def ticket_dashboard(request):
         return redirect('ticket_dashboard')
 
     return render(request, 'dashboard.html', {'tickets': tickets})
+
+@login_required
+def ticket_detail(request, pk):
+    ticket = get_object_or_404(Ticket, pk=pk)
+    return render(request, 'ticket_detail.html', {'ticket': ticket})

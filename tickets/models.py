@@ -3,10 +3,15 @@ from django.db import models
 class Ticket(models.Model):
     image = models.ImageField(upload_to='tickets/')
     location = models.CharField(max_length=200)
+    address = models.CharField(max_length=255, blank=True, null=True)
     comments = models.TextField()
     phone_number = models.CharField(max_length=15)
     submitted_at = models.DateTimeField(auto_now_add=True)
     summary = models.CharField(max_length=250, blank=True, null=True)
+    resolved = models.BooleanField(default=False)
+    resolution_comment = models.CharField(max_length=250, blank=True, null=True)
+
+
     category = models.CharField(
         max_length=100, choices=[
         ('Street Maintenance', 'Street Maintenance'),

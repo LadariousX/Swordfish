@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ticket #{{ ticket.id }}</title>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <link rel="stylesheet" href="{% static 'ticket_detail.css' %}">
+
+  <!-- Leaflet -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- JS -->
+  <script defer src="{% static 'ticket_detail.js' %}"></script>
+</head>
+<body>
+  <header class="topbar">
+    <h1>🗂 Ticket #{{ ticket.id }}</h1>
+    <nav>
+      <a href="/dashboard">⬅ Back to Dashboard</a>
+      <a href="{% url 'logout' %}">Logout</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="detail-container" data-location="{{ ticket.location }}">
+      <div class="detail-top">
+        {% if ticket.image %}
+          <img src="{{ ticket.image.url }}" alt="Ticket image" />
+        {% endif %}
+        <div id="detail-map" class="detail-map"></div>
+      </div>
+
+      <div class="ticket-info">
+        <h2>{{ ticket.address|default:ticket.location }}</h2>
+        <p><strong>Priority:</strong> {{ ticket.priority|default:"Unassigned" }}</p>
+        <p><strong>Category:</strong> {{ ticket.category|default:"Pending AI Classification" }}</p>
+        <p><strong>Summary:</strong> {{ ticket.summary|default:"No summary yet." }}</p>
+        <p><strong>Comments:</strong> {{ ticket.comments }}</p>
+        <p><strong>Phone:</strong> {{ ticket.phone_number }}</p>
+        <p><strong>Submitted:</strong> {{ ticket.submitted_at }}</p>
+
+        <a href="/dashboard" class="back-btn">← Back</a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2025 CivicLens | Smart Citizen Platform</p>
+  </footer>
+</body>
+</html>

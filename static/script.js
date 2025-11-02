@@ -2,15 +2,17 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log("CivicLens loaded!");
 
   // === MAP SETUP ===
-  const map = L.map("map").setView([27.8006, -97.3964], 11); // default: Corpus Christi, TX
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 19,
-    attribution:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  }).addTo(map);
+const map = L.map("map").setView([27.8006, -97.3964], 11); // default: Corpus Christi, TX
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  maxZoom: 19,
+  attribution:
+    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+}).addTo(map);
 
-  let marker;
+let marker;
 
+// ✅ make sure we have a hidden input for this
+const locationInput = document.getElementById("location");
   // Allow user to drop a pin manually
   map.on("click", (e) => {
     const { lat, lng } = e.latlng;

@@ -15,7 +15,7 @@
 </head>
 <body>
   <header class="topbar">
-    <h1>CivicLens</h1>
+    <h1>🏙️ CivicLens</h1>
     <nav>
       <a href="#" class="active">Report Issue</a>
       <a href="#">Track Ticket</a>
@@ -23,10 +23,7 @@
     </nav>
   </header>
 
-  <section class="hero">
-    <h2>Empowering Citizens for a Better City</h2>
-    <p>Submit issues like potholes, flooding, or broken streetlights directly to your city’s departments.</p>
-  </section>
+
 
   <main class="form-wrapper">
       <form id="reportForm" method="POST" enctype="multipart/form-data" action="{% url 'submit_ticket' %}">
@@ -38,6 +35,8 @@
   <div class="image-preview"><img id="preview" alt="Preview" /></div>
 
   <label for="map">📍 Location</label>
+          <input type="hidden" id="location" name="location" />
+
   <div id="map" ></div>
   <button type="button" id="locateBtn" class="secondary">📡 Use My Current Location</button>
 

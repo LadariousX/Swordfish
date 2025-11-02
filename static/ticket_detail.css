@@ -1,0 +1,70 @@
+.detail-container {
+  max-width: 900px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  padding: 20px;
+}
+
+.detail-top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.detail-top img {
+  flex: 1 1 45%;
+  max-width: 420px;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.detail-map {
+  flex: 1 1 45%;
+  min-width: 300px;
+  height: 280px;
+  border-radius: 10px;
+}
+
+.ticket-info h2 {
+  color: var(--primary, #0077cc);
+  margin-bottom: 10px;
+}
+
+.ticket-info p {
+  font-size: 16px;
+  color: #444;
+  margin-bottom: 6px;
+}
+
+.back-btn {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 16px;
+  background: var(--accent, #0077cc);
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.back-btn:hover {
+  background: var(--accent-hover, #005fa3);
+}
+
+@media (max-width: 700px) {
+  .detail-top {
+    flex-direction: column;
+  }
+
+  .detail-top img,
+  .detail-map {
+    width: 100%;
+  }
+}

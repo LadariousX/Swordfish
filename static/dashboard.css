@@ -1,0 +1,109 @@
+.ticket-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin: 40px auto;
+  max-width: 1200px;
+}
+
+/* Card container */
+.ticket-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 500px;
+  padding: 18px;
+  text-align: left;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ticket-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Flex layout for image and map side by side */
+.ticket-content {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.ticket-card img {
+  flex: 1 1 48%;
+  width: 48%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Mini map next to the image */
+.mini-map {
+  flex: 1 1 48%;
+  width: 48%;
+  height: 180px;
+  border-radius: 8px;
+  background-color: #f4f4f4;
+}
+
+/* Text content */
+.ticket-card h3 {
+  color: var(--primary, #0077cc);
+  margin: 8px 0 4px;
+  font-size: 1.1rem;
+}
+
+.ticket-card p {
+  font-size: 15px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+/* Button styling */
+.view-btn {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 10px 14px;
+  border: none;
+  background: var(--accent, #0077cc);
+  color: #fff;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.view-btn:hover {
+  background: var(--accent-hover, #005fa3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .ticket-card {
+    width: 90%;
+  }
+
+  .ticket-content {
+    flex-direction: column;
+  }
+
+  .ticket-card img,
+  .mini-map {
+    width: 100%;
+  }
+}
+.ticket-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.ticket-card-link:hover .ticket-card {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+
