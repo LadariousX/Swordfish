@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import TicketForm
 from .models import Ticket
 from .classification import classify_input_data
 import threading
+from django.contrib.auth.decorators import login_required
 
 def process_ticket_async(ticket_id):
     def task():
@@ -24,3 +25,26 @@ def submit_ticket(request):
 
 def success(request):
     return render(request, 'success.html')
+
+@login_required
+def ticket_dashboard(request):
+    user = request.user
+
+    # Superusers see all; departments see their own
+    if user.is_superuser:
+        tickets = Ticket.objects.all()
+    elif user.groups.exists():
+        department = user.groups.first().name
+        tickets = Ticket.objects.filter(department=department)
+    else:
+        tickets = Ticket.objects.none()
+
+    if request.method == 'POST':
+        ticket_id = request.POST.get('ticket_id')
+        new_status = request.POST.get('status')
+        ticket = get_object_or_404(Ticket, id=ticket_id)
+        ticket.status = new_status
+        ticket.save()
+        return redirect('ticket_dashboard')
+
+    return render(request, 'dashboard.html', {'tickets': tickets})

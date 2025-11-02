@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CivicLens – Report an Issue</title>
+  <link rel="icon" href="https://img.icons8.com/emoji/48/cityscape.png" />
+
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <script src="{% static 'script.js' %}"></script>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <h1>CivicLens</h1>
+    <nav>
+      <a href="#" class="active">Report Issue</a>
+      <a href="#">Track Ticket</a>
+      <a href="/dashboard">Administration</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h2>Empowering Citizens for a Better City</h2>
+    <p>Submit issues like potholes, flooding, or broken streetlights directly to your city’s departments.</p>
+  </section>
+
+  <main class="form-wrapper">
+      <form id="reportForm" method="POST" enctype="multipart/form-data" action="{% url 'submit_ticket' %}">
+  {% csrf_token %}
+  <h2>⚠️ Report an Issue</h2>
+
+  <label for="image">📸 Upload Image</label>
+  <input type="file" id="image" name="image" accept="image/*" required />
+  <div class="image-preview"><img id="preview" alt="Preview" /></div>
+
+  <label for="map">📍 Location</label>
+  <div id="map" ></div>
+  <button type="button" id="locateBtn" class="secondary">📡 Use My Current Location</button>
+
+  <label for="comment">💬 Comment</label>
+  <textarea id="comment" name="comments" placeholder="Describe the issue..." required></textarea>
+
+  <label for="phone">📞 Phone Number</label>
+  <input type="tel" id="phone" name="phone_number" placeholder="(123) 456-7890" required />
+
+  <label for="priority">🚨 Priority Level</label>
+  <select id="priority" name="priority" required>
+    <option value="" disabled selected>Select priority</option>
+    <option value="High">High Priority</option>
+    <option value="Medium">Medium Priority</option>
+    <option value="Low">Low Priority</option>
+  </select>
+
+  <button type="submit">📤 Submit Report</button>
+  <div class="toast" id="toast"></div>
+</form>
+
+  </main>
+
+  <footer>
+    <p>© 2025 CivicLens | Smart Citizen Platform</p>
+  </footer>
+
+</body>
+</html>

@@ -7,7 +7,19 @@ class Ticket(models.Model):
     phone_number = models.CharField(max_length=15)
     submitted_at = models.DateTimeField(auto_now_add=True)
     summary = models.CharField(max_length=250, blank=True, null=True)
-    category = models.CharField(max_length=100, blank=True, null=True)
+    category = models.CharField(
+        max_length=100, choices=[
+        ('Street Maintenance', 'Street Maintenance'),
+        ('Trash Services', 'Trash Services'),
+        ('Water Utilities', 'Water Utilities'),
+        ('Animal Control', 'Animal Control'),
+        ('Electrical Utilities', 'Electrical Utilities'),
+        ('etc.', 'etc.'),
+        ],
+    blank=True,
+    null=True
+)
+
     priority = models.CharField(
         max_length=20,
         choices=[
