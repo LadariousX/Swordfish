@@ -1,3 +1,74 @@
+/* ==================== HEADER / TOPBAR ==================== */
+.topbar {
+  background: #0077b6;
+  color: white;
+  padding: 14px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Navigation links */
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 6px 8px;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.navbar a.active {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.navbar a:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Logout link (clean and small at top-right) */
+.header-right form {
+  margin: 0;
+}
+
+.logout-link {
+  background: none;
+  border: none;
+  color: white;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  transition: opacity 0.2s ease;
+}
+
+.logout-link:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
+/* ==================== DASHBOARD GRID ==================== */
 .ticket-grid {
   display: flex;
   flex-wrap: wrap;
@@ -7,7 +78,6 @@
   max-width: 1200px;
 }
 
-/* Card container */
 .ticket-card {
   background: #fff;
   border-radius: 12px;
@@ -23,10 +93,8 @@
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 
-/* Flex layout for image and map side by side */
 .ticket-content {
   display: flex;
-  flex-direction: row;
   gap: 12px;
   align-items: center;
   justify-content: center;
@@ -41,7 +109,6 @@
   border-radius: 8px;
 }
 
-/* Mini map next to the image */
 .mini-map {
   flex: 1 1 48%;
   width: 48%;
@@ -50,9 +117,8 @@
   background-color: #f4f4f4;
 }
 
-/* Text content */
 .ticket-card h3 {
-  color: var(--primary, #0077cc);
+  color: #0077cc;
   margin: 8px 0 4px;
   font-size: 1.1rem;
 }
@@ -63,25 +129,35 @@
   margin-bottom: 10px;
 }
 
-/* Button styling */
-.view-btn {
-  display: inline-block;
-  margin-top: 8px;
-  padding: 10px 14px;
-  border: none;
-  background: var(--accent, #0077cc);
-  color: #fff;
-  border-radius: 6px;
+.ticket-card-link {
   text-decoration: none;
-  transition: background 0.2s ease;
+  color: inherit;
+  display: block;
 }
 
-.view-btn:hover {
-  background: var(--accent-hover, #005fa3);
+.ticket-card-link:hover .ticket-card {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
 }
 
-/* Responsive adjustments */
-@media (max-width: 600px) {
+/* ==================== RESPONSIVE DESIGN ==================== */
+@media (max-width: 700px) {
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .header-left {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header-right {
+    align-self: flex-end;
+  }
+
   .ticket-card {
     width: 90%;
   }
@@ -95,15 +171,12 @@
     width: 100%;
   }
 }
-.ticket-card-link {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
 
-.ticket-card-link:hover .ticket-card {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-  cursor: pointer;
+/* ==================== FOOTER ==================== */
+footer {
+  text-align: center;
+  padding: 12px;
+  background: #f1f1f1;
+  color: #555;
+  font-size: 14px;
 }
-

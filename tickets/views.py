@@ -30,24 +30,16 @@ def success(request):
 def ticket_dashboard(request):
     user = request.user
 
-    # Superusers see all; departments see their own
     if user.is_superuser:
-        tickets = Ticket.objects.all()
+        tickets = Ticket.objects.all().order_by('resolved', '-submitted_at')
     elif user.groups.exists():
         department = user.groups.first().name
-        tickets = Ticket.objects.filter(department=department)
+        tickets = Ticket.objects.filter(department=department).order_by('resolved', '-submitted_at')
     else:
         tickets = Ticket.objects.none()
 
-    if request.method == 'POST':
-        ticket_id = request.POST.get('ticket_id')
-        new_status = request.POST.get('status')
-        ticket = get_object_or_404(Ticket, id=ticket_id)
-        ticket.status = new_status
-        ticket.save()
-        return redirect('ticket_dashboard')
-
     return render(request, 'dashboard.html', {'tickets': tickets})
+
 
 @login_required
 def ticket_detail(request, ticket_id):
