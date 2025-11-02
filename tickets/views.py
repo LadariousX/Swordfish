@@ -50,9 +50,10 @@ def ticket_dashboard(request):
     return render(request, 'dashboard.html', {'tickets': tickets})
 
 @login_required
-def ticket_detail(request, pk):
-    ticket = get_object_or_404(Ticket, pk=pk)
+def ticket_detail(request, ticket_id):
+    ticket = get_object_or_404(Ticket, id=ticket_id)
     return render(request, 'ticket_detail.html', {'ticket': ticket})
+
 
 
 def resolve_ticket(request, ticket_id):
