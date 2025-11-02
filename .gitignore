@@ -22,7 +22,6 @@ ENV/
 .DS_Store
 
 # Django / Project files
-db.sqlite3
 media/
 staticfiles/
 *.log
