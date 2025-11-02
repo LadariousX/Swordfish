@@ -88,7 +88,7 @@ python manage.py runserver
 ### Access the App
 
 - **User Form →** [http://127.0.0.1:8000/](http://127.0.0.1:8000/)  
-  (Submit tickets — no login required)
+  (Submit tickets — no login required).
 
 - **Admin Panel →** [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/)  
   (Login with superuser credentials)
