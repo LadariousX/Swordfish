@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".mini-map").forEach((mapDiv) => {
-    const coords = mapDiv.dataset.location.split(",");
-    if (coords.length < 2) return;
+    const coords = mapDiv.dataset.location?.split(",");
+    if (!coords || coords.length < 2) return;
 
     const lat = parseFloat(coords[0].trim());
     const lng = parseFloat(coords[1].trim());

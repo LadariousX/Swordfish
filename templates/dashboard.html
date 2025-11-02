@@ -22,16 +22,21 @@
 </head>
 <body>
   <header class="topbar">
-    <h1>🗂 Ticket Dashboard</h1>
-    <nav>
-      <a href="/">Report Issue</a>
-      <a href="#">Track Ticket</a>
-      <a href="/dashboard" class="active">Administration</a>
-<form action="{% url 'logout' %}" method="post" style="display:inline;">
-  {% csrf_token %}
-  <button type="submit" class="logout-btn">Logout</button>
-</form>
-    </nav>
+    <div class="header-left">
+      <h1>🗂 Ticket Dashboard</h1>
+      <nav class="navbar">
+        <a href="/">Report Issue</a>
+        <a href="#">Track Ticket</a>
+        <a href="/dashboard" class="active">Administration</a>
+      </nav>
+    </div>
+
+    <div class="header-right">
+      <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="logout-link">Logout</button>
+      </form>
+    </div>
   </header>
 
   <main>
@@ -47,12 +52,12 @@
             </div>
 
             <h3>
-  {% if ticket.address %}
-    {{ ticket.address }}
-  {% else %}
-    {{ ticket.location }}
-  {% endif %}
-</h3>
+              {% if ticket.address %}
+                {{ ticket.address }}
+              {% else %}
+                {{ ticket.location }}
+              {% endif %}
+            </h3>
 
             <p>{{ ticket.comments|truncatewords:20 }}</p>
           </div>
