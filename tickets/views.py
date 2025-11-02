@@ -53,3 +53,12 @@ def ticket_dashboard(request):
 def ticket_detail(request, pk):
     ticket = get_object_or_404(Ticket, pk=pk)
     return render(request, 'ticket_detail.html', {'ticket': ticket})
+
+
+def resolve_ticket(request, ticket_id):
+    ticket = get_object_or_404(Ticket, id=ticket_id)
+    if request.method == "POST":
+        ticket.resolved = True
+        ticket.resolution_comment = request.POST.get("resolution_comment", "")
+        ticket.save()
+    return redirect("ticket_detail", ticket_id=ticket.id)

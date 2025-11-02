@@ -39,16 +39,31 @@
       </div>
 
       <div class="ticket-info">
-        <h2>{{ ticket.address|default:ticket.location }}</h2>
-        <p><strong>Priority:</strong> {{ ticket.priority|default:"Unassigned" }}</p>
-        <p><strong>Category:</strong> {{ ticket.category|default:"Pending AI Classification" }}</p>
-        <p><strong>Summary:</strong> {{ ticket.summary|default:"No summary yet." }}</p>
-        <p><strong>Comments:</strong> {{ ticket.comments }}</p>
-        <p><strong>Phone:</strong> {{ ticket.phone_number }}</p>
-        <p><strong>Submitted:</strong> {{ ticket.submitted_at }}</p>
+  <h2>{{ ticket.address|default:ticket.location }}</h2>
+  <p><strong>Priority:</strong> {{ ticket.priority|default:"Unassigned" }}</p>
+  <p><strong>Category:</strong> {{ ticket.category|default:"Pending AI Classification" }}</p>
+  <p><strong>Summary:</strong> {{ ticket.summary|default:"No summary yet." }}</p>
+  <p><strong>Comments:</strong> {{ ticket.comments }}</p>
+  <p><strong>Phone:</strong> {{ ticket.phone_number }}</p>
+  <p><strong>Submitted:</strong> {{ ticket.submitted_at }}</p>
+  <p><strong>Status:</strong> {% if ticket.resolved %}✅ Resolved{% else %}⏳ Open{% endif %}</p>
 
-        <a href="/dashboard" class="back-btn">← Back</a>
-      </div>
+  {% if not ticket.resolved %}
+  <form action="{% url 'resolve_ticket' ticket.id %}" method="post" class="resolve-form">
+    {% csrf_token %}
+    <label for="resolution_comment"><strong>Resolution Comment (optional):</strong></label>
+    <textarea id="resolution_comment" name="resolution_comment" placeholder="Describe how the issue was resolved..."></textarea>
+    <button type="submit" class="resolve-btn">Mark as Resolved</button>
+  </form>
+  {% else %}
+    {% if ticket.resolution_comment %}
+      <p><strong>Resolution:</strong> {{ ticket.resolution_comment }}</p>
+    {% endif %}
+  {% endif %}
+
+  <a href="/dashboard" class="back-btn">← Back</a>
+</div>
+
     </div>
   </main>
 
